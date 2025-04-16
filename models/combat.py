@@ -1,6 +1,6 @@
 import random
 import time
-from ..models.character import Character
+from rpg_mechanics.models.character import Character
 
 class CombatSystem:
     def __init__(self, verbose=True):

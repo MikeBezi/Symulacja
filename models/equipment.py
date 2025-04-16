@@ -1,10 +1,11 @@
 class Weapon:
-    def __init__(self, name, damage, attack_speed, strength_bonus=0, dexterity_bonus=0):
+    def __init__(self, name, damage, attack_speed, strength_bonus=0, dexterity_bonus=0, intelligence_bonus=0):
         self.name = name
         self.damage = damage  # Bazowe obrażenia
         self.attack_speed = attack_speed  # Wpływa na częstotliwość ataków (1-10)
         self.strength_bonus = strength_bonus  # Bonus do siły
         self.dexterity_bonus = dexterity_bonus  # Bonus do zręczności
+        self.intelligence_bonus = intelligence_bonus  # Bonus do inteligencji
     
     def __str__(self):
         """Reprezentacja tekstowa broni."""

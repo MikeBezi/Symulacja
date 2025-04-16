@@ -1,7 +1,7 @@
 import random
-from ..models.character import Character
-from ..models.equipment import create_weapon, create_armor
-from ..models.combat import CombatSystem
+from rpg_mechanics.models.character import Character
+from rpg_mechanics.models.equipment import create_weapon, create_armor
+from rpg_mechanics.models.combat import CombatSystem
 
 class Simulator:
     def __init__(self, num_characters=20, verbose=False):

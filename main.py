@@ -1,10 +1,10 @@
 import os
 import time
-from models.character import Character
-from models.equipment import create_weapon, create_armor
-from models.combat import CombatSystem
-from simulation.simulator import Simulator
-from simulation.statistics import StatisticsAnalyzer
+from rpg_mechanics.models.character import Character
+from rpg_mechanics.models.equipment import create_weapon, create_armor
+from rpg_mechanics.models.combat import CombatSystem
+from rpg_mechanics.simulation.simulator import Simulator
+from rpg_mechanics.simulation.statistics import StatisticsAnalyzer
 
 def main():
     """Główna funkcja programu."""
