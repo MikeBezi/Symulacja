@@ -1,4 +1,3 @@
-# Symulacja
 # Symulator Mechaniki RPG
 
 System do symulacji walk w grze RPG, uwzględniający różne atrybuty postaci, bronie i zbroje.
@@ -15,15 +14,19 @@ Projekt implementuje mechanikę gry RPG z następującymi elementami:
 
 ```
 rpg_mechanics/
-├── models/              # Modele używane w systemie
-│   ├── character.py     # Definicje postaci i atrybutów
-│   ├── equipment.py     # Definicje broni i zbroi
-│   └── combat.py        # System walki
-├── simulation/          # Moduł symulacji
-│   ├── simulator.py     # Silnik symulacji
-│   └── statistics.py    # Analiza wyników
-├── results/             # Katalog na wygenerowane wykresy i raporty
-└── main.py              # Punkt wejściowy programu
+├── models/                # Modele używane w systemie
+│   ├── character.py       # Definicje postaci i atrybutów
+│   ├── equipment.py       # Definicje broni i zbroi
+│   └── combat.py          # System walki
+├── simulation/            # Moduł symulacji
+│   ├── simulator.py       # Silnik symulacji
+│   └── statistics.py      # Analiza wyników
+├── results/               # Katalog na wygenerowane wykresy i raporty
+├── doc/                   # Dokumentacja
+│   └── mechanika.md       # Szczegółowy opis mechaniki gry
+├── run_simulation.py      # Skrypt uruchamiający symulację
+├── test_simulation.py     # Skrypt do testowania z parametrami
+└── main.py                # Główny moduł projektu
 ```
 
 ## Instalacja i uruchomienie
@@ -42,10 +45,27 @@ pip install matplotlib numpy
 
 ### Uruchomienie symulacji
 
+Standardowa symulacja:
+```bash
+# Z katalogu głównego projektu
+python -c "import sys; sys.path.append('.'); from rpg_mechanics import main; main.main()"
+
+# Lub z katalogu rpg_mechanics
+cd rpg_mechanics
+python run_simulation.py
+```
+
+Testowanie z niestandardowymi parametrami:
 ```bash
 cd rpg_mechanics
-python python run_simulation.py
+python test_simulation.py --characters 10 --verbose --rounds 50
 ```
+
+Dostępne parametry:
+- `-c, --characters` - liczba bohaterów (domyślnie 20)
+- `-v, --verbose` - wyświetla szczegóły każdej walki
+- `-np, --no-plots` - nie generuje wykresów
+- `-r, --rounds` - maksymalna liczba rund w walce (domyślnie 100)
 
 ## Elementy mechaniki
 
@@ -79,14 +99,13 @@ System generuje szczegółową analizę obejmującą:
 - Wykres prawdopodobieństwa zwycięstwa
 - Wykres korelacji atrybutów z wynikami
 
-## Przykładowe wyniki
+## Dokumentacja
 
-Po przeprowadzeniu symulacji, system generuje raport zawierający:
-- Informacje o najlepszych bohaterach
-- Korelacje między atrybutami a wynikami walk
-- Skuteczność różnych rodzajów broni i zbroi
-- Sugestie dotyczące balansu gry
-- Wykresy przedstawiające wyniki w sposób graficzny
+Szczegółowa dokumentacja mechaniki gry znajduje się w pliku `doc/mechanika.md`. Zawiera ona:
+- Opis wszystkich atrybutów i ich wpływu na walkę
+- Listę dostępnych broni i zbroi z ich statystykami
+- Szczegółowy opis algorytmów walki
+- Zasady symulacji i analizy wyników
 
 ## Rozszerzenia projektu
 
@@ -99,4 +118,4 @@ Możliwe rozszerzenia projektu:
 
 ## Autorzy
 
-Ten projekt został stworzony jako demonstracja mechaniki gry RPG do celów edukacyjnych.
+Ten projekt został stworzony jako demonstracja mechaniki gry RPG do celów edukacyjnych. 
