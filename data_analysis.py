@@ -1,11 +1,13 @@
 import json
 import matplotlib
-matplotlib.use('Agg')  # Ustaw backend bez GUI
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 from scipy.stats import pearsonr
 import seaborn as sns
+import os
+from datetime import datetime
 
 class TournamentAnalyzer:
     def __init__(self):
@@ -19,43 +21,38 @@ class TournamentAnalyzer:
             # Tournament results - może mieć wiele JSON-ów, bierzemy ostatni
             with open("json/tournament_results.json", "r", encoding="utf-8") as f:
                 content = f.read().strip()
-                # Podziel na sekcje JSON (oddzielone pustymi liniami)
                 json_sections = [section.strip() for section in content.split('\n\n') if section.strip()]
-                # Weź ostatnią sekcję i sparsuj jako JSON
                 last_json = json_sections[-1]
                 self.tournament_data = json.loads(last_json)
             
             # Character data - może mieć wiele JSON-ów, bierzemy ostatni
             with open("json/character_data.json", "r", encoding="utf-8") as f:
                 content = f.read().strip()
-                # Podziel na sekcje JSON (oddzielone pustymi liniami)
                 json_sections = [section.strip() for section in content.split('\n\n') if section.strip()]
-                # Weź ostatnią sekcję i sparsuj jako JSON
                 last_json = json_sections[-1]
                 self.character_data = json.loads(last_json)
                 
             # Item history - może mieć wiele JSON-ów, bierzemy ostatni
             with open("json/item_history.json", "r", encoding="utf-8") as f:
                 content = f.read().strip()
-                # Podziel na sekcje JSON (oddzielone pustymi liniami)
                 json_sections = [section.strip() for section in content.split('\n\n') if section.strip()]
-                # Weź ostatnią sekcję i sparsuj jako JSON
                 last_json = json_sections[-1]
                 self.item_data = json.loads(last_json)
             
             print("✅ Dane wczytane pomyślnie!")
             print(f"📊 Znaleziono {len(json_sections)} wpisów, używam ostatniego")
             return True
+        
         except FileNotFoundError as e:
             print(f"❌ Nie znaleziono pliku: {e}")
             return False
+        
         except json.JSONDecodeError as e:
             print(f"❌ Błąd parsowania JSON: {e}")
             return False
     
     def prepare_analysis_data(self):
-        """Przygotowuje dane do analizy"""
-        # Połącz statystyki turnieju z danymi postaci
+        # Połączenie statystyk turnieju z danymi postaci
         stats = self.tournament_data["statistics"]
         characters = self.character_data["characters"]
         
@@ -71,6 +68,7 @@ class TournamentAnalyzer:
                     "win_rate": stats[name]["win_rate"],
                     "wins": stats[name]["wins"],
                     "losses": stats[name]["losses"],
+                    
                     # Statystyki bazowe
                     "strength": char["stats"]["strength"],
                     "dexterity": char["stats"]["dexterity"], 
@@ -105,7 +103,7 @@ class TournamentAnalyzer:
         return pd.DataFrame(analysis_data).fillna(0)
     
     def analyze_stat_correlations(self, df):
-        """Analizuje korelacje między statystykami a współczynnikiem wygranych"""
+        # Analiza korelacji między statystykami a współczynnikiem wygranych
         stats_to_analyze = ["strength", "dexterity", "hp", "speed", "dodge"]
         correlations = {}
         
@@ -116,7 +114,6 @@ class TournamentAnalyzer:
         return correlations
     
     def analyze_equipment_impact(self, df):
-        """Analizuje wpływ tierów przedmiotów na wyniki"""
         # Analiza tierów broni
         weapon_analysis = df.groupby("weapon_tier")["win_rate"].agg([
             "mean", "median", "count", "std"
@@ -144,8 +141,22 @@ class TournamentAnalyzer:
             "armor_base_type": armor_base_type_analysis
         }
     
+    def save_data_analysis(self, filename, dpi=300):         
+        charts_folder = "data_analysis"
+        if not os.path.exists(charts_folder):
+            os.makedirs(charts_folder)
+
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        name, ext = filename.rsplit('.', 1)
+        timestamped_filename = f"{name}_{timestamp}.{ext}" 
+
+        plt.tight_layout()
+        filepath = os.path.join(charts_folder, timestamped_filename)
+        plt.savefig(filepath, dpi=dpi, bbox_inches='tight')
+        plt.close()
+
     def create_stat_correlation_plot(self, correlations):
-        """Tworzy wykres korelacji statystyk"""
+        # Tworzy wykres korelacji statystyk
         stats = list(correlations.keys())
         corr_values = [correlations[stat]["correlation"] for stat in stats]
         
@@ -163,13 +174,11 @@ class TournamentAnalyzer:
             plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.02 if value >= 0 else bar.get_height() - 0.05,
                     f'{value:.3f}', ha='center', va='bottom' if value >= 0 else 'top', fontweight='bold')
         
-        plt.tight_layout()
-        plt.savefig("stat_correlations.png", dpi=300, bbox_inches='tight')
-        plt.close()  # Zamknij wykres zamiast go pokazywać
+        self.save_data_analysis("stat_correlations.png", dpi=300)
     
     def create_equipment_analysis_plots(self, equipment_data):
-        """Tworzy wykresy analizy ekwipunku"""
-        fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(15, 10))
+        # Tworzy wykresy analizy ekwipunku
+        fig, ((ax1, ax2)) = plt.subplots(2, 1, figsize=(15, 10))
         
         # Wykres 1: Tier broni
         weapon_tier_data = equipment_data["weapon_tier"]
@@ -189,38 +198,12 @@ class TournamentAnalyzer:
         ax2.set_xlabel("Tier zbroi")
         ax2.set_ylabel("Średni win rate (%)")
         for i, v in enumerate(armor_tier_data["mean"]):
-            ax2.text(armor_tier_data.index[i], v + 1, f'{v:.1f}%', ha='center', fontweight='bold')
+            ax2.text(armor_tier_data.index[i], v + 1, f'{v:.1f}%', ha='center', fontweight='bold')      
         
-        # Wykres 3: Typ broni
-        weapon_base_type_data = equipment_data["weapon_base_type"]
-        weapon_names = list(weapon_base_type_data.index)
-        ax3.bar(range(len(weapon_names)), weapon_base_type_data["mean"], color='lightcoral', alpha=0.7)
-        ax3.set_title("Średni win rate według typu broni", fontweight='bold')
-        ax3.set_xlabel("Typ broni")
-        ax3.set_ylabel("Średni win rate (%)")
-        ax3.set_xticks(range(len(weapon_names)))
-        ax3.set_xticklabels(weapon_names, rotation=45)
-        for i, v in enumerate(weapon_base_type_data["mean"]):
-            ax3.text(i, v + 1, f'{v:.1f}%', ha='center', fontweight='bold')
-        
-        # Wykres 4: Typ zbroi  
-        armor_base_type_data = equipment_data["armor_base_type"]
-        armor_names = list(armor_base_type_data.index)
-        ax4.bar(range(len(armor_names)), armor_base_type_data["mean"], color='lightsteelblue', alpha=0.7)
-        ax4.set_title("Średni win rate według typu zbroi", fontweight='bold')
-        ax4.set_xlabel("Typ zbroi")
-        ax4.set_ylabel("Średni win rate (%)")
-        ax4.set_xticks(range(len(armor_names)))
-        ax4.set_xticklabels(armor_names, rotation=45)
-        for i, v in enumerate(armor_base_type_data["mean"]):
-            ax4.text(i, v + 1, f'{v:.1f}%', ha='center', fontweight='bold')
-        
-        plt.tight_layout()
-        plt.savefig("equipment_analysis.png", dpi=300, bbox_inches='tight')
-        plt.close()  # Zamknij wykres zamiast go pokazywać
+        self.save_data_analysis("equipment_analysis.png", dpi=300)
     
     def create_heatmap_analysis(self, df):
-        """Tworzy heatmapę korelacji wszystkich statystyk"""
+        # Tworzy heatmapę korelacji wszystkich statystyk
         # Wybierz tylko numeryczne kolumny do analizy korelacji
         numeric_cols = ["win_rate", "strength", "dexterity", "hp", "speed", "dodge", 
                        "weapon_tier", "armor_tier"]
@@ -230,12 +213,11 @@ class TournamentAnalyzer:
         sns.heatmap(corr_data, annot=True, cmap='RdBu_r', center=0,
                     square=True, fmt='.3f', cbar_kws={"shrink": .8})
         plt.title("Heatmapa korelacji wszystkich czynników", fontsize=14, fontweight='bold')
-        plt.tight_layout()
-        plt.savefig("correlation_heatmap.png", dpi=300, bbox_inches='tight')
-        plt.close()  # Zamknij wykres zamiast go pokazywać
+
+        self.save_data_analysis("correlation_heatmap.png", dpi=300)
     
     def generate_report(self, correlations, equipment_data, df):
-        """Generuje raport z analizy"""
+        # Generuje raport z analizy
         print("\n" + "="*60)
         print("📊 RAPORT ANALIZY TURNIEJU RPG")
         print("="*60)
@@ -264,7 +246,7 @@ class TournamentAnalyzer:
         print("\n" + "="*60)
     
     def run_full_analysis(self):
-        """Przeprowadza pełną analizę danych"""
+        # Przeprowadza pełną analizę danych
         if not self.load_data():
             return
         
@@ -272,26 +254,22 @@ class TournamentAnalyzer:
         df = self.prepare_analysis_data()
         print(f"📊 Przygotowano dane dla {len(df)} wojowników")
         
-        # Analizuj korelacje statystyk
+        # Analiza korelacji statystyk
         correlations = self.analyze_stat_correlations(df)
         
-        # Analizuj wpływ ekwipunku
+        # Analiza wpływu ekwipunku
         equipment_data = self.analyze_equipment_impact(df)
         
-        # Twórz wykresy
+        # Tworzy wykresy
         self.create_stat_correlation_plot(correlations)
         self.create_equipment_analysis_plots(equipment_data)
         self.create_heatmap_analysis(df)
         
-        # Generuj raport
+        # Generuje raport
         self.generate_report(correlations, equipment_data, df)
         
         return df, correlations, equipment_data
 
 def main():
-    """Główna funkcja do uruchomienia analizy danych turnieju"""
     analyzer = TournamentAnalyzer()
     return analyzer.run_full_analysis()
-
-if __name__ == "__main__":
-    main() 
