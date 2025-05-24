@@ -68,7 +68,7 @@ class TournamentAnalyzer:
                     "wins": stats[name]["wins"],
                     "losses": stats[name]["losses"],
                     
-                    # Statystyki bazowe
+                    # Statystyki końcowe (bazowe + ekwipunek)
                     "strength": char["stats"]["strength"],
                     "dexterity": char["stats"]["dexterity"], 
                     "hp": char["stats"]["hp"],

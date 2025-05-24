@@ -22,7 +22,7 @@ class Item:
         
         # Generuj wartości dla statystyk
         for stat in selected_stats:
-            max_value = 2 if self.tier == 1 else 3
+            max_value = 3 if self.tier == 1 else 2
             # Tier 1: losuje statystyki z zakresu 1-2
             # Tier 2 i 3: losuje statystyki z zakresu 1-3
             

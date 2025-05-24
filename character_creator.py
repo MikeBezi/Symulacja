@@ -6,7 +6,8 @@ import json
 from datetime import datetime
 
 def equip_item(character, item):
-    # Zwiększ statystyki postaci o wartości z przedmiotu
+    # UWAGA: Ta funkcja TRWALE zwiększa statystyki postaci o bonusy z przedmiotu!
+    # Po wywołaniu character.strength itp. będą zawierać statystyki bazowe + bonusy
     for stat, value in item.stats.items():
         if hasattr(character, stat):
             current_value = getattr(character, stat)
@@ -24,6 +25,7 @@ def character_to_dict(character):
         "name": character.name,
         "class": character.__class__.__name__,
         "stats": {
+            # Statystyki końcowe (po dodaniu bonusów z ekwipunku)
             "strength": character.strength,
             "dexterity": character.dexterity,
             "hp": character.hp,
