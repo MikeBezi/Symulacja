@@ -1,6 +1,5 @@
 import character_creator
 import combat
-import json
 
 def main():
     print("=== TURNIEJ RPG ===\n")
@@ -12,14 +11,10 @@ def main():
     # Etap 2: Przygotowanie turnieju
     print("\nETAP 2: Przygotowanie turnieju...")
     print(f"Przygotowano {len(char_list)} wojowników do turnieju!")
-    
-    # Wyświetl statystyki wszystkich wojowników przed turniejem
-    print("\n=== WOJOWNICY ===")
-    for character in char_list:
-        print(f"{character.name} ({character.__class__.__name__}): STR={character.strength}, DEX={character.dexterity}, HP={character.hp}, SPD={character.speed}, DODGE={character.dodge}")
+
     
     # Etap 3: Turniej
-    print(f"\nETAP 3: ROZPOCZYNAM TURNIEJ!")
+    print(f"\nETAP 3: START TURNIEJ!")
     print(f"Liczba walk: {len(char_list) * (len(char_list) - 1) // 2}")
     
     results = combat.run_tournament(char_list)
@@ -48,7 +43,7 @@ def main():
         print(f"    {weapon_info}")
         print(f"    {armor_info}")
         print(f"    Wygrane: {stats['wins']:2d}, Przegrane: {stats['losses']:2d}, Współczynnik: {stats['win_rate']:5.1f}%")
-        print()  # Pusta linia dla czytelności
+        print()
     
     # Etap 5: Zapis wyników
     print("\nETAP 5: Zapisywanie wyników...")

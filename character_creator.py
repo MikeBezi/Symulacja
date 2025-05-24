@@ -91,14 +91,14 @@ def main():
         equip_item(character, all_armors[i])
     
     # Wyświetlanie wyników
-    for character in char_list:
-        print(f"{character.name} ({character.__class__.__name__})")
-        print(f"  Statystyki: STR={character.strength}, DEX={character.dexterity}, HP={character.hp}, SPD={character.speed}, DODGE={character.dodge}")
-        if hasattr(character, 'weapon'):
-            print(f"  Broń: {character.weapon.name} (Statystyki: {character.weapon.stats})")
-        if hasattr(character, 'armor'):
-            print(f"  Zbroja: {character.armor.name} (Statystyki: {character.armor.stats})")
-        print()
+    # for character in char_list:
+    #     print(f"{character.name} ({character.__class__.__name__})")
+    #     print(f"  Statystyki: STR={character.strength}, DEX={character.dexterity}, HP={character.hp}, SPD={character.speed}, DODGE={character.dodge}")
+    #     if hasattr(character, 'weapon'):
+    #         print(f"  Broń: {character.weapon.name} (Statystyki: {character.weapon.stats})")
+    #     if hasattr(character, 'armor'):
+    #         print(f"  Zbroja: {character.armor.name} (Statystyki: {character.armor.stats})")
+    #     print()
     
     # Zapisanie przedmiotów do pliku JSON
     items.save_items_to_file(all_items)
