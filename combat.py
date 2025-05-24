@@ -2,7 +2,6 @@ import random
 import json
 from datetime import datetime
 from itertools import combinations
-import character_creator
 import os
 
 class Combat:
@@ -119,9 +118,7 @@ def run_tournament(characters):
     
     print(f"Rozpoczynam turniej! Liczba walk: {len(fight_pairs)}")
     
-    for i, (fighter1, fighter2) in enumerate(fight_pairs, 1):
-        print(f"Walka {i}/{len(fight_pairs)}: {fighter1.name} vs {fighter2.name}")
-        
+    for _, (fighter1, fighter2) in enumerate(fight_pairs, 1):
         combat = Combat(fighter1, fighter2)
         result = combat.fight()
         results.append(result)
