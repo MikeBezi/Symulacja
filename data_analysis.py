@@ -16,12 +16,17 @@ class TournamentAnalyzer:
     def load_data(self):
         # Wczytywanie danych z plików JSON - bierze ostatni wpis w przypadku wielu JSON-ów
         try:
-            # Tournament results - normalny JSON
-            with open("tournament_results.json", "r", encoding="utf-8") as f:
-                self.tournament_data = json.load(f)
+            # Tournament results - może mieć wiele JSON-ów, bierzemy ostatni
+            with open("json/tournament_results.json", "r", encoding="utf-8") as f:
+                content = f.read().strip()
+                # Podziel na sekcje JSON (oddzielone pustymi liniami)
+                json_sections = [section.strip() for section in content.split('\n\n') if section.strip()]
+                # Weź ostatnią sekcję i sparsuj jako JSON
+                last_json = json_sections[-1]
+                self.tournament_data = json.loads(last_json)
             
             # Character data - może mieć wiele JSON-ów, bierzemy ostatni
-            with open("character_data.json", "r", encoding="utf-8") as f:
+            with open("json/character_data.json", "r", encoding="utf-8") as f:
                 content = f.read().strip()
                 # Podziel na sekcje JSON (oddzielone pustymi liniami)
                 json_sections = [section.strip() for section in content.split('\n\n') if section.strip()]
@@ -30,7 +35,7 @@ class TournamentAnalyzer:
                 self.character_data = json.loads(last_json)
                 
             # Item history - może mieć wiele JSON-ów, bierzemy ostatni
-            with open("item_history.json", "r", encoding="utf-8") as f:
+            with open("json/item_history.json", "r", encoding="utf-8") as f:
                 content = f.read().strip()
                 # Podziel na sekcje JSON (oddzielone pustymi liniami)
                 json_sections = [section.strip() for section in content.split('\n\n') if section.strip()]

@@ -85,7 +85,7 @@ class Combat:
         
         turn_count = 0
         
-        while turn_count:
+        while True:
             turn_count += 1
             self.combat_log.append(f"\n--- TURA {turn_count} ---")
             
@@ -96,15 +96,6 @@ class Combat:
             # Atak drugiego wojownika (jeśli pierwszy nie zakończył walki)
             if self.single_turn(second_attacker, first_attacker):
                 break
-        
-
-            if self.fighter1.current_hp > self.fighter2.current_hp:
-                self.winner = self.fighter1
-                self.loser = self.fighter2
-            else:
-                self.winner = self.fighter2
-                self.loser = self.fighter1
-
         
         return {
             "fighter1": self.fighter1.name,
