@@ -1,6 +1,9 @@
 import items 
 import characters
 import random
+import os
+import json
+from datetime import datetime
 
 def equip_item(character, item):
     # Zwiększ statystyki postaci o wartości z przedmiotu
@@ -15,6 +18,7 @@ def equip_item(character, item):
     elif isinstance(item, items.Armor) and not hasattr(character, 'armor'):
         character.armor = item
 
+# Przygotowanie danych do zapisu do pliku JSON
 def character_to_dict(character):
     data = {
         "name": character.name,
@@ -33,10 +37,13 @@ def character_to_dict(character):
     }
     return data
 
+# Zapisanie postaci do pliku JSON
 def save_characters(char_list, filename="character_data.json"):
-    import json
-    from datetime import datetime
     
+    json_folder = "json"
+    if not os.path.exists(json_folder):
+       os.makedirs(json_folder)
+
     characters_data = [character_to_dict(character) for character in char_list]
     
     data = {
@@ -44,7 +51,8 @@ def save_characters(char_list, filename="character_data.json"):
         "characters": characters_data
     }
     
-    with open(filename, "a", encoding="utf-8") as file:
+    filepath = os.path.join(json_folder, filename)
+    with open(filepath, "a", encoding="utf-8") as file:
         file.write(json.dumps(data, indent=4, ensure_ascii=False) + "\n\n")
 
 def main():
@@ -92,17 +100,12 @@ def main():
             print(f"  Zbroja: {character.armor.name} (Statystyki: {character.armor.stats})")
         print()
     
-    # Zapisz przedmioty do pliku
+    # Zapisanie przedmiotów do pliku JSON
     items.save_items_to_file(all_items)
     print(f"Zapisano {len(all_items)} przedmiotów do pliku item_history.json")
     
-    # Zapisz postacie do pliku
+    # Zapisanie postaci do pliku JSON
     save_characters(char_list)
     print(f"Zapisano {len(char_list)} postaci do pliku character_data.json")
     
-    return char_list  # Zwracamy listę postaci!
-
-
-
-if __name__ == "__main__":
-    main()
+    return char_list

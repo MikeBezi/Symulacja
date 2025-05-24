@@ -1,6 +1,7 @@
 import random
 import json
 from datetime import datetime
+import os
 
 class Item:
     def __init__(self, name, tier=1):
@@ -10,7 +11,6 @@ class Item:
         self._generate_stats() # generuje statystyki na podstawie tieru
     
     def _generate_stats(self):
-        """Generuje statystyki na podstawie tieru przedmiotu"""
         # Lista możliwych statystyk
         available_stats = ["strength", "dexterity", "hp", "speed", "dodge"]
         
@@ -30,7 +30,7 @@ class Item:
             #do statystyk dodaje losową wartość z zakresu 1-max_value
     
     def to_dict(self):
-        """Konwertuje obiekt do słownika do zapisu w JSON"""
+        # Konwertuje obiekt do słownika do zapisu w JSON
         return {
             "name": self.name,
             "tier": self.tier,
@@ -102,6 +102,10 @@ def generate_random_items(weapon_counts, armor_counts):
     return items
 
 def save_items_to_file(items, filename="item_history.json"):
+
+    json_folder = "json"
+    if not os.path.exists(json_folder):
+       os.makedirs(json_folder)
     # Konwersja obiektów do formatu słownika
     items_data = [item.to_dict() for item in items]
     
@@ -112,25 +116,6 @@ def save_items_to_file(items, filename="item_history.json"):
     }
     
     # Zapis do pliku z formatowaniem i kodowaniem UTF-8
-    with open(filename, "a", encoding="utf-8") as file:
+    filepath = os.path.join(json_folder, filename)
+    with open(filepath, "a", encoding="utf-8") as file:
         file.write(json.dumps(data, indent=4, ensure_ascii=False) + "\n\n")
-
-# Przykład użycia:
-if __name__ == "__main__":
-    # Określenie ile przedmiotów danego tieru wygenerować
-    weapon_counts = {1: 10, 2: 7, 3: 3}  # 10 broni tier 1, 7 broni tier 2, 3 broni tier 3
-    armor_counts = {1: 10, 2: 7, 3: 3}   # 10 zbroi tier 1, 7 zbroi tier 2, 3 zbroje tier 3
-    
-    # Generowanie przedmiotów
-    generated_items = generate_random_items(weapon_counts, armor_counts)
-    
-    # Wyświetlanie wygenerowanych przedmiotów
-    for item in generated_items:
-        if isinstance(item, Weapon):
-            print(f"{item.name}: Statystyki: {item.stats}")
-        else:
-            print(f"{item.name}: Statystyki: {item.stats}")
-    
-    # Zapisywanie do pliku
-    save_items_to_file(generated_items)
-    print(f"Zapisano {len(generated_items)} przedmiotów do pliku item_history.json")
