@@ -119,3 +119,4 @@ def save_items_to_file(items, filename="item_history.json"):
     filepath = os.path.join(json_folder, filename)
     with open(filepath, "a", encoding="utf-8") as file:
         file.write(json.dumps(data, indent=4, ensure_ascii=False) + "\n\n")
+        

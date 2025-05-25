@@ -1,0 +1,606 @@
+{
+    "total_tournaments": 25,
+    "fighters": {
+        "Anna": {
+            "tournament_results": {
+                "total_wins": 210,
+                "total_losses": 265,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 98,
+                "dexterity": 41,
+                "hp": 98,
+                "speed": 90,
+                "dodge": 50
+            },
+            "equipment_totals": {
+                "weapon_tier": 37,
+                "armor_tier": 44
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 3.9,
+                "dexterity": 1.6,
+                "hp": 3.9,
+                "speed": 3.6,
+                "dodge": 2.0
+            },
+            "equipment": {
+                "weapon_tier": 1.5,
+                "armor_tier": 1.8
+            }
+        },
+        "Bartek": {
+            "tournament_results": {
+                "total_wins": 280,
+                "total_losses": 195,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 78,
+                "dexterity": 103,
+                "hp": 84,
+                "speed": 60,
+                "dodge": 71
+            },
+            "equipment_totals": {
+                "weapon_tier": 47,
+                "armor_tier": 45
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 3.1,
+                "dexterity": 4.1,
+                "hp": 3.4,
+                "speed": 2.4,
+                "dodge": 2.8
+            },
+            "equipment": {
+                "weapon_tier": 1.9,
+                "armor_tier": 1.8
+            }
+        },
+        "Cezary": {
+            "tournament_results": {
+                "total_wins": 181,
+                "total_losses": 294,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 53,
+                "dexterity": 75,
+                "hp": 63,
+                "speed": 122,
+                "dodge": 76
+            },
+            "equipment_totals": {
+                "weapon_tier": 41,
+                "armor_tier": 37
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 2.1,
+                "dexterity": 3.0,
+                "hp": 2.5,
+                "speed": 4.9,
+                "dodge": 3.0
+            },
+            "equipment": {
+                "weapon_tier": 1.6,
+                "armor_tier": 1.5
+            }
+        },
+        "Dominika": {
+            "tournament_results": {
+                "total_wins": 274,
+                "total_losses": 201,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 93,
+                "dexterity": 63,
+                "hp": 100,
+                "speed": 79,
+                "dodge": 60
+            },
+            "equipment_totals": {
+                "weapon_tier": 47,
+                "armor_tier": 41
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 3.7,
+                "dexterity": 2.5,
+                "hp": 4.0,
+                "speed": 3.2,
+                "dodge": 2.4
+            },
+            "equipment": {
+                "weapon_tier": 1.9,
+                "armor_tier": 1.6
+            }
+        },
+        "Eryk": {
+            "tournament_results": {
+                "total_wins": 314,
+                "total_losses": 161,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 75,
+                "dexterity": 98,
+                "hp": 82,
+                "speed": 49,
+                "dodge": 90
+            },
+            "equipment_totals": {
+                "weapon_tier": 38,
+                "armor_tier": 50
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 3.0,
+                "dexterity": 3.9,
+                "hp": 3.3,
+                "speed": 2.0,
+                "dodge": 3.6
+            },
+            "equipment": {
+                "weapon_tier": 1.5,
+                "armor_tier": 2.0
+            }
+        },
+        "Filip": {
+            "tournament_results": {
+                "total_wins": 168,
+                "total_losses": 307,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 47,
+                "dexterity": 80,
+                "hp": 53,
+                "speed": 142,
+                "dodge": 71
+            },
+            "equipment_totals": {
+                "weapon_tier": 46,
+                "armor_tier": 42
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 1.9,
+                "dexterity": 3.2,
+                "hp": 2.1,
+                "speed": 5.7,
+                "dodge": 2.8
+            },
+            "equipment": {
+                "weapon_tier": 1.8,
+                "armor_tier": 1.7
+            }
+        },
+        "Gosia": {
+            "tournament_results": {
+                "total_wins": 229,
+                "total_losses": 246,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 117,
+                "dexterity": 48,
+                "hp": 104,
+                "speed": 62,
+                "dodge": 49
+            },
+            "equipment_totals": {
+                "weapon_tier": 40,
+                "armor_tier": 41
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 4.7,
+                "dexterity": 1.9,
+                "hp": 4.2,
+                "speed": 2.5,
+                "dodge": 2.0
+            },
+            "equipment": {
+                "weapon_tier": 1.6,
+                "armor_tier": 1.6
+            }
+        },
+        "Henryk": {
+            "tournament_results": {
+                "total_wins": 312,
+                "total_losses": 163,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 69,
+                "dexterity": 117,
+                "hp": 81,
+                "speed": 39,
+                "dodge": 81
+            },
+            "equipment_totals": {
+                "weapon_tier": 45,
+                "armor_tier": 42
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 2.8,
+                "dexterity": 4.7,
+                "hp": 3.2,
+                "speed": 1.6,
+                "dodge": 3.2
+            },
+            "equipment": {
+                "weapon_tier": 1.8,
+                "armor_tier": 1.7
+            }
+        },
+        "Irena": {
+            "tournament_results": {
+                "total_wins": 209,
+                "total_losses": 266,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 62,
+                "dexterity": 71,
+                "hp": 50,
+                "speed": 130,
+                "dodge": 78
+            },
+            "equipment_totals": {
+                "weapon_tier": 44,
+                "armor_tier": 42
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 2.5,
+                "dexterity": 2.8,
+                "hp": 2.0,
+                "speed": 5.2,
+                "dodge": 3.1
+            },
+            "equipment": {
+                "weapon_tier": 1.8,
+                "armor_tier": 1.7
+            }
+        },
+        "Jakub": {
+            "tournament_results": {
+                "total_wins": 238,
+                "total_losses": 237,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 96,
+                "dexterity": 48,
+                "hp": 104,
+                "speed": 81,
+                "dodge": 54
+            },
+            "equipment_totals": {
+                "weapon_tier": 39,
+                "armor_tier": 35
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 3.8,
+                "dexterity": 1.9,
+                "hp": 4.2,
+                "speed": 3.2,
+                "dodge": 2.2
+            },
+            "equipment": {
+                "weapon_tier": 1.6,
+                "armor_tier": 1.4
+            }
+        },
+        "Kamil": {
+            "tournament_results": {
+                "total_wins": 279,
+                "total_losses": 196,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 85,
+                "dexterity": 105,
+                "hp": 73,
+                "speed": 41,
+                "dodge": 77
+            },
+            "equipment_totals": {
+                "weapon_tier": 38,
+                "armor_tier": 43
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 3.4,
+                "dexterity": 4.2,
+                "hp": 2.9,
+                "speed": 1.6,
+                "dodge": 3.1
+            },
+            "equipment": {
+                "weapon_tier": 1.5,
+                "armor_tier": 1.7
+            }
+        },
+        "Laura": {
+            "tournament_results": {
+                "total_wins": 189,
+                "total_losses": 286,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 56,
+                "dexterity": 74,
+                "hp": 54,
+                "speed": 121,
+                "dodge": 85
+            },
+            "equipment_totals": {
+                "weapon_tier": 41,
+                "armor_tier": 43
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 2.2,
+                "dexterity": 3.0,
+                "hp": 2.2,
+                "speed": 4.8,
+                "dodge": 3.4
+            },
+            "equipment": {
+                "weapon_tier": 1.6,
+                "armor_tier": 1.7
+            }
+        },
+        "Marek": {
+            "tournament_results": {
+                "total_wins": 211,
+                "total_losses": 264,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 98,
+                "dexterity": 46,
+                "hp": 110,
+                "speed": 93,
+                "dodge": 50
+            },
+            "equipment_totals": {
+                "weapon_tier": 44,
+                "armor_tier": 34
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 3.9,
+                "dexterity": 1.8,
+                "hp": 4.4,
+                "speed": 3.7,
+                "dodge": 2.0
+            },
+            "equipment": {
+                "weapon_tier": 1.8,
+                "armor_tier": 1.4
+            }
+        },
+        "Natalia": {
+            "tournament_results": {
+                "total_wins": 263,
+                "total_losses": 212,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 74,
+                "dexterity": 101,
+                "hp": 78,
+                "speed": 50,
+                "dodge": 73
+            },
+            "equipment_totals": {
+                "weapon_tier": 39,
+                "armor_tier": 41
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 3.0,
+                "dexterity": 4.0,
+                "hp": 3.1,
+                "speed": 2.0,
+                "dodge": 2.9
+            },
+            "equipment": {
+                "weapon_tier": 1.6,
+                "armor_tier": 1.6
+            }
+        },
+        "Oliwia": {
+            "tournament_results": {
+                "total_wins": 158,
+                "total_losses": 317,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 46,
+                "dexterity": 82,
+                "hp": 44,
+                "speed": 131,
+                "dodge": 66
+            },
+            "equipment_totals": {
+                "weapon_tier": 36,
+                "armor_tier": 41
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 1.8,
+                "dexterity": 3.3,
+                "hp": 1.8,
+                "speed": 5.2,
+                "dodge": 2.6
+            },
+            "equipment": {
+                "weapon_tier": 1.4,
+                "armor_tier": 1.6
+            }
+        },
+        "Piotr": {
+            "tournament_results": {
+                "total_wins": 250,
+                "total_losses": 225,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 108,
+                "dexterity": 55,
+                "hp": 98,
+                "speed": 76,
+                "dodge": 56
+            },
+            "equipment_totals": {
+                "weapon_tier": 41,
+                "armor_tier": 45
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 4.3,
+                "dexterity": 2.2,
+                "hp": 3.9,
+                "speed": 3.0,
+                "dodge": 2.2
+            },
+            "equipment": {
+                "weapon_tier": 1.6,
+                "armor_tier": 1.8
+            }
+        },
+        "Rafał": {
+            "tournament_results": {
+                "total_wins": 297,
+                "total_losses": 178,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 75,
+                "dexterity": 108,
+                "hp": 76,
+                "speed": 54,
+                "dodge": 79
+            },
+            "equipment_totals": {
+                "weapon_tier": 41,
+                "armor_tier": 45
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 3.0,
+                "dexterity": 4.3,
+                "hp": 3.0,
+                "speed": 2.2,
+                "dodge": 3.2
+            },
+            "equipment": {
+                "weapon_tier": 1.6,
+                "armor_tier": 1.8
+            }
+        },
+        "Szymon": {
+            "tournament_results": {
+                "total_wins": 160,
+                "total_losses": 315,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 45,
+                "dexterity": 74,
+                "hp": 54,
+                "speed": 130,
+                "dodge": 83
+            },
+            "equipment_totals": {
+                "weapon_tier": 36,
+                "armor_tier": 42
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 1.8,
+                "dexterity": 3.0,
+                "hp": 2.2,
+                "speed": 5.2,
+                "dodge": 3.3
+            },
+            "equipment": {
+                "weapon_tier": 1.4,
+                "armor_tier": 1.7
+            }
+        },
+        "Tomasz": {
+            "tournament_results": {
+                "total_wins": 240,
+                "total_losses": 235,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 100,
+                "dexterity": 58,
+                "hp": 106,
+                "speed": 73,
+                "dodge": 44
+            },
+            "equipment_totals": {
+                "weapon_tier": 43,
+                "armor_tier": 36
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 4.0,
+                "dexterity": 2.3,
+                "hp": 4.2,
+                "speed": 2.9,
+                "dodge": 1.8
+            },
+            "equipment": {
+                "weapon_tier": 1.7,
+                "armor_tier": 1.4
+            }
+        },
+        "Wiktoria": {
+            "tournament_results": {
+                "total_wins": 288,
+                "total_losses": 187,
+                "total_fights": 475
+            },
+            "stat_totals": {
+                "strength": 86,
+                "dexterity": 105,
+                "hp": 73,
+                "speed": 44,
+                "dodge": 81
+            },
+            "equipment_totals": {
+                "weapon_tier": 42,
+                "armor_tier": 36
+            },
+            "tournaments_played": 25,
+            "stats": {
+                "strength": 3.4,
+                "dexterity": 4.2,
+                "hp": 2.9,
+                "speed": 1.8,
+                "dodge": 3.2
+            },
+            "equipment": {
+                "weapon_tier": 1.7,
+                "armor_tier": 1.4
+            }
+        }
+    },
+    "last_updated": "2025-05-25 17:31:14"
+}
