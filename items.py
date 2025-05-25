@@ -23,8 +23,8 @@ class Item:
         # Generuj wartości dla statystyk
         for stat in selected_stats:
             max_value = 3 if self.tier == 1 else 2
-            # Tier 1: losuje statystyki z zakresu 1-2
-            # Tier 2 i 3: losuje statystyki z zakresu 1-3
+            # Tier 1: losuje statystyki z zakresu 1-3
+            # Tier 2 i 3: losuje statystyki z zakresu 1-2
             
             self.stats[stat] = random.randint(1, max_value)
             #do statystyk dodaje losową wartość z zakresu 1-max_value

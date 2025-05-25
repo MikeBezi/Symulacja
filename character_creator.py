@@ -6,8 +6,7 @@ import json
 from datetime import datetime
 
 def equip_item(character, item):
-    # UWAGA: Ta funkcja TRWALE zwiększa statystyki postaci o bonusy z przedmiotu!
-    # Po wywołaniu character.strength itp. będą zawierać statystyki bazowe + bonusy
+    # Zwiększ statystyki postaci o wartości z przedmiotu
     for stat, value in item.stats.items():
         if hasattr(character, stat):
             current_value = getattr(character, stat)
@@ -25,7 +24,6 @@ def character_to_dict(character):
         "name": character.name,
         "class": character.__class__.__name__,
         "stats": {
-            # Statystyki końcowe (po dodaniu bonusów z ekwipunku)
             "strength": character.strength,
             "dexterity": character.dexterity,
             "hp": character.hp,
@@ -84,7 +82,10 @@ def main():
     all_armors = items.generate_random_items({}, {1: 10, 2: 7, 3: 3})   # 10 zbroi tier 1, 7 zbroi tier 2, 3 zbroje tier 3
     all_items = all_weapons + all_armors
 
-    
+    # Przetasuj listy, żeby postacie dostawały różne tiery w różnych turniech
+    random.shuffle(all_weapons)
+    random.shuffle(all_armors)
+
     print(f"Wygenerowano {len(all_weapons)} broni i {len(all_armors)} zbroi")
     
     # Przypisywanie przedmiotów do postaci

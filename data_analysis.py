@@ -268,7 +268,188 @@ class TournamentAnalyzer:
         self.generate_report(correlations, equipment_data, df)
         
         return df, correlations, equipment_data
+    
+    def load_summary_data(self):
+        # Wczytanie danych z tournament_summary.json
+        try:
+            with open("json/tournament_summary.json", "r", encoding="utf-8") as f:
+                self.summary_data = json.load(f)
+            print("✅ Dane z podsumowania turnieju wczytane pomyślnie!")
+            return True
+        except FileNotFoundError:
+            print("❌ Nie znaleziono pliku tournament_summary.json")
+            print("💡 Najpierw uruchom kilka turnieji aby wygenerować dane")
+            return False
+        except json.JSONDecodeError as e:
+            print(f"❌ Błąd parsowania JSON: {e}")
+            return False
+    
+    def prepare_summary_analysis_data(self):
+        # Przygotowanie DataFrame z danych skumulowanych
+        fighters = self.summary_data["fighters"]
+        analysis_data = []
+        
+        for fighter_name, data in fighters.items():
+            # Oblicz ogólny win rate
+            total_fights = data["tournament_results"]["total_fights"]
+            total_wins = data["tournament_results"]["total_wins"]
+            overall_win_rate = (total_wins / total_fights * 100) if total_fights > 0 else 0
+            
+            row = {
+                "name": fighter_name,
+                "overall_win_rate": round(overall_win_rate, 2),
+                "total_wins": total_wins,
+                "total_losses": data["tournament_results"]["total_losses"],
+                "total_fights": total_fights,
+                
+                # Statystyki postaci (z ostatniego turnieju)
+                "strength": data["stats"]["strength"],
+                "dexterity": data["stats"]["dexterity"],
+                "hp": data["stats"]["hp"],
+                "speed": data["stats"]["speed"],
+                "dodge": data["stats"]["dodge"],
+                
+                # Ekwipunek
+                "weapon_tier": data["equipment"]["weapon_tier"],
+                "armor_tier": data["equipment"]["armor_tier"]
+            }
+            analysis_data.append(row)
+        
+        return pd.DataFrame(analysis_data)
+    
+    def analyze_summary_stat_correlations(self, df):
+        # Analiza korelacji dla danych skumulowanych
+        stats_to_analyze = ["strength", "dexterity", "hp", "speed", "dodge"]
+        correlations = {}
+        
+        for stat in stats_to_analyze:
+            corr, p_value = pearsonr(df[stat], df["overall_win_rate"])
+            correlations[stat] = {"correlation": corr, "p_value": p_value}
+        
+        return correlations
+    
+    def analyze_summary_equipment_impact(self, df):
+        # Analiza wpływu ekwipunku dla danych skumulowanych
+        weapon_analysis = df.groupby("weapon_tier")["overall_win_rate"].agg([
+            "mean", "median", "count", "std"
+        ]).round(2)
+        
+        # Analiza tierów zbroi
+        armor_analysis = df.groupby("armor_tier")["overall_win_rate"].agg([
+            "mean", "median", "count", "std"
+        ]).round(2)
+        
+        return {
+            "weapon_tier": weapon_analysis,
+            "armor_tier": armor_analysis
+        }
+    
+    def save_final_analysis(self, filename, dpi=300):
+        # Zapisanie wykresów do folderu final_analysis
+        charts_folder = "final_analysis"
+        if not os.path.exists(charts_folder):
+            os.makedirs(charts_folder)
+
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        name, ext = filename.rsplit('.', 1)
+        timestamped_filename = f"{name}_{timestamp}.{ext}" 
+
+        plt.tight_layout()
+        filepath = os.path.join(charts_folder, timestamped_filename)
+        plt.savefig(filepath, dpi=dpi, bbox_inches='tight')
+        plt.close()
+    
+    def create_summary_correlation_plot(self, correlations):
+        # Tworzy wykres korelacji dla danych skumulowanych
+        stats = list(correlations.keys())
+        corr_values = [correlations[stat]["correlation"] for stat in stats]
+        
+        plt.figure(figsize=(10, 6))
+        bars = plt.bar(stats, corr_values, color=['skyblue' if x >= 0 else 'lightcoral' for x in corr_values])
+        
+        plt.title("Korelacja statystyk z ogólnym win rate (wiele turnieji)", fontsize=14, fontweight='bold')
+        plt.xlabel("Statystyki")
+        plt.ylabel("Współczynnik korelacji")
+        plt.ylim(-1, 1)
+        plt.grid(axis='y', alpha=0.3)
+        
+        # Dodaj wartości na słupkach
+        for bar, value in zip(bars, corr_values):
+            plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.02 if value >= 0 else bar.get_height() - 0.05,
+                    f'{value:.3f}', ha='center', va='bottom' if value >= 0 else 'top', fontweight='bold')
+        
+        self.save_final_analysis("summary_stat_correlations.png", dpi=300)
+    
+    def generate_summary_report(self, correlations, equipment_data, df):
+        # Generuje raport dla danych skumulowanych
+        print("\n" + "="*80)
+        print("📊 RAPORT ANALIZY SKUMULOWANEJ (WIELE TURNIEJI)")
+        print("="*80)
+        
+        # Informacje ogólne
+        total_fights = df["total_fights"].iloc[0] if len(df) > 0 else 0
+        total_tournaments = total_fights // 19 if total_fights > 0 else 0  # 19 walk na turniej dla 20 postaci
+        
+        print(f"\n📈 PRZEGLĄD OGÓLNY:")
+        print(f"   Szacowana liczba turnieji: {total_tournaments}")
+        print(f"   Łączna liczba walk na wojownika: {total_fights}")
+        print(f"   Analizowanych wojowników: {len(df)}")
+        
+        print("\n🎯 NAJWAŻNIEJSZE STATYSTYKI:")
+        sorted_stats = sorted(correlations.items(), key=lambda x: abs(x[1]["correlation"]), reverse=True)
+        for i, (stat, data) in enumerate(sorted_stats, 1):
+            significance = "***" if data["p_value"] < 0.001 else "**" if data["p_value"] < 0.01 else "*" if data["p_value"] < 0.05 else ""
+            print(f"{i}. {stat.upper()}: r={data['correlation']:.3f} {significance}")
+        
+        print("\n⚔️ ANALIZA EKWIPUNKU:")
+        print("\nTiery broni (średni win rate):")
+        for tier, rate in equipment_data["weapon_tier"]["mean"].items():
+            count = equipment_data["weapon_tier"]["count"][tier]
+            print(f"   Tier {tier}: {rate:.1f}% ({count} wojowników)")
+        
+        print("\nTiery zbroi (średni win rate):")
+        for tier, rate in equipment_data["armor_tier"]["mean"].items():
+            count = equipment_data["armor_tier"]["count"][tier]
+            print(f"   Tier {tier}: {rate:.1f}% ({count} wojowników)")
+        
+        print("\n🏆 TOP 5 WOJOWNIKÓW (ogólny win rate):")
+        top_fighters = df.nlargest(5, "overall_win_rate")
+        for i, (_, fighter) in enumerate(top_fighters.iterrows(), 1):
+            print(f"{i}. {fighter['name']}: {fighter['overall_win_rate']:.1f}% ({fighter['total_wins']}W/{fighter['total_losses']}L)")
+            print(f"   STR={fighter['strength']}, DEX={fighter['dexterity']}, HP={fighter['hp']}, SPD={fighter['speed']}, DODGE={fighter['dodge']}")
+            print(f"   Ekwipunek: Broń T{fighter['weapon_tier']}, Zbroja T{fighter['armor_tier']}")
+        
+        print("\n" + "="*80)
+    
+    def run_summary_analysis(self):
+        # Przeprowadza analizę danych skumulowanych z tournament_summary.json
+        print("\n🎯 ROZPOCZYNAM ANALIZĘ SKUMULOWANYCH DANYCH...")
+        
+        if not self.load_summary_data():
+            return None
+        
+        # Przygotuj dane
+        df = self.prepare_summary_analysis_data()
+        print(f"📊 Przygotowano dane skumulowane dla {len(df)} wojowników")
+        
+        # Analizy
+        correlations = self.analyze_summary_stat_correlations(df)
+        equipment_data = self.analyze_summary_equipment_impact(df)
+        
+        # Tworzy wykresy - tylko korelacje (najbardziej przydatne)
+        print("📈 Tworzę wykres korelacji...")
+        self.create_summary_correlation_plot(correlations)
+        
+        # Generuje raport
+        self.generate_summary_report(correlations, equipment_data, df)
+        
+        print("✅ Analiza skumulowana zakończona! Wyniki w folderze 'final_analysis'")
+        return df, correlations, equipment_data
 
 def main():
     analyzer = TournamentAnalyzer()
     return analyzer.run_full_analysis()
+
+def summary_analysis():
+    analyzer = TournamentAnalyzer()
+    return analyzer.run_summary_analysis()

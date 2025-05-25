@@ -126,8 +126,4 @@ rpg_mechanics/
 ├── tournament_results.json # Wyniki
 ├── character_data.json    # Dane postaci
 └── item_history.json     # Historia przedmiotów
-<<<<<<< HEAD
 ```
-=======
-```
->>>>>>> b154c1ee0c63cee8bb0901921111e49fb2d64ffd
